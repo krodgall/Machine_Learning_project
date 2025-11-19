@@ -32,6 +32,6 @@ Descripción de las variables:
 
 
 Autores:
-Carlos Rodríguez Gallardo
-Juan José Gómez Romero
-Jaime Rodríguez Gross
+Carlos Rodríguez Gallardo: c.rodriguezgallardo@cunef.edu
+Juan José Gómez Romero: juanjose.gomez@cunef.edu
+Jaime Rodríguez Gross: j.rodriguezgross@cunef.edu
