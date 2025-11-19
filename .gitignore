@@ -2,7 +2,10 @@
 __pycache__/
 *.py[codz]
 *$py.class
+<<<<<<< HEAD
 .vscode
+=======
+>>>>>>> rama_ase
 cars.csv
 
 # C extensions
