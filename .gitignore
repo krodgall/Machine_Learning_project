@@ -2,7 +2,7 @@
 __pycache__/
 *.py[codz]
 *$py.class
-cars.csv
+data
 .vscode
 # C extensions
 *.so
