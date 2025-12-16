@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>03_carlos_analisis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>05_feature_engineering</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7511,17 +7511,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=238c3ec1">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ac3233aa">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="NOTEBOOK-CARLOS-AN%C3%81LISIS-EXPLORATORIO-(Seller_name-to-Price)"><u>NOTEBOOK CARLOS ANÁLISIS EXPLORATORIO (Seller_name to Price)</u><a class="anchor-link" href="#NOTEBOOK-CARLOS-AN%C3%81LISIS-EXPLORATORIO-(Seller_name-to-Price)">¶</a></h1>
+<h1 id="FEATURE-ENGINEERING:"><u>FEATURE ENGINEERING:</u><a class="anchor-link" href="#FEATURE-ENGINEERING:">¶</a></h1>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8c8cade">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=54cbfac1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7529,13 +7529,14 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d1482ffb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d27df0c1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7543,13 +7544,13 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_ini</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/raw/cars.csv'</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/processed/clean_cars.csv'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e847d7ee">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=445ccad3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7557,7 +7558,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_ini</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -7592,22 +7593,23 @@ a.anchor-link {
 <th>model</th>
 <th>year</th>
 <th>mileage</th>
-<th>engine</th>
-<th>transmission</th>
-<th>drivetrain</th>
-<th>fuel_type</th>
-<th>mpg</th>
-<th>exterior_color</th>
-<th>interior_color</th>
 <th>accidents_or_damage</th>
 <th>one_owner</th>
 <th>personal_use_only</th>
 <th>seller_name</th>
 <th>seller_rating</th>
 <th>driver_rating</th>
-<th>driver_reviews_num</th>
-<th>price_drop</th>
-<th>price</th>
+<th>...</th>
+<th>engine_liters</th>
+<th>engine_cylinders</th>
+<th>engine_type</th>
+<th>transmission_simple</th>
+<th>drivetrain_simple</th>
+<th>fuel_simple</th>
+<th>mpg_min</th>
+<th>mpg_max</th>
+<th>seller_rating_cat</th>
+<th>driver_rating_cat</th>
 </tr>
 </thead>
 <tbody>
@@ -7616,115 +7618,120 @@ a.anchor-link {
 <td>Acura</td>
 <td>ILX Hybrid 1.5L</td>
 <td>2013</td>
-<td>92945.0</td>
-<td>1.5L I-4 i-VTEC variable valve control, engine...</td>
-<td>Automatic</td>
-<td>Front-wheel Drive</td>
-<td>Gasoline</td>
-<td>39-38</td>
-<td>Black</td>
-<td>Parchment</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>Iconic Coach</td>
+<td>47645.0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Kars Today</td>
 <td>NaN</td>
 <td>4.4</td>
-<td>12.0</td>
-<td>300.0</td>
-<td>13988.0</td>
+<td>...</td>
+<td>1.5</td>
+<td>4</td>
+<td>hybrid</td>
+<td>automatic</td>
+<td>Front-wheel Drive</td>
+<td>Hybrid</td>
+<td>38.0</td>
+<td>39.0</td>
+<td>sin valoración</td>
+<td>4-5</td>
 </tr>
 <tr>
 <th>1</th>
 <td>Acura</td>
 <td>ILX Hybrid 1.5L</td>
 <td>2013</td>
-<td>47645.0</td>
-<td>1.5L I4 8V MPFI SOHC Hybrid</td>
-<td>Automatic CVT</td>
+<td>53422.0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Weiss Toyota of South County</td>
+<td>4.3</td>
+<td>4.4</td>
+<td>...</td>
+<td>1.5</td>
+<td>4</td>
+<td>hybrid</td>
+<td>automatic</td>
 <td>Front-wheel Drive</td>
 <td>Hybrid</td>
-<td>39-38</td>
-<td>Gray</td>
-<td>Ebony</td>
-<td>1.0</td>
-<td>1.0</td>
-<td>1.0</td>
-<td>Kars Today</td>
-<td>NaN</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>NaN</td>
-<td>17995.0</td>
+<td>38.0</td>
+<td>39.0</td>
+<td>4-5</td>
+<td>4-5</td>
 </tr>
 <tr>
 <th>2</th>
 <td>Acura</td>
 <td>ILX Hybrid 1.5L</td>
 <td>2013</td>
-<td>53422.0</td>
-<td>1.5L I4 8V MPFI SOHC Hybrid</td>
-<td>Automatic CVT</td>
+<td>117598.0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Apple Tree Acura</td>
+<td>NaN</td>
+<td>4.4</td>
+<td>...</td>
+<td>1.5</td>
+<td>4</td>
+<td>hybrid</td>
+<td>automatic</td>
 <td>Front-wheel Drive</td>
 <td>Hybrid</td>
-<td>39-38</td>
-<td>Bellanova White Pearl</td>
-<td>Ebony</td>
-<td>0.0</td>
-<td>1.0</td>
-<td>1.0</td>
-<td>Weiss Toyota of South County</td>
-<td>4.3</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>500.0</td>
-<td>17000.0</td>
+<td>38.0</td>
+<td>39.0</td>
+<td>sin valoración</td>
+<td>4-5</td>
 </tr>
 <tr>
 <th>3</th>
 <td>Acura</td>
 <td>ILX Hybrid 1.5L</td>
 <td>2013</td>
-<td>117598.0</td>
-<td>1.5L I4 8V MPFI SOHC Hybrid</td>
-<td>Automatic CVT</td>
+<td>114865.0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>Herb Connolly Chevrolet</td>
+<td>3.7</td>
+<td>4.4</td>
+<td>...</td>
+<td>1.5</td>
+<td>4</td>
+<td>hybrid</td>
+<td>automatic</td>
 <td>Front-wheel Drive</td>
 <td>Hybrid</td>
-<td>39-38</td>
-<td>Polished Metal Metallic</td>
-<td>NaN</td>
-<td>0.0</td>
-<td>1.0</td>
-<td>1.0</td>
-<td>Apple Tree Acura</td>
-<td>NaN</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>675.0</td>
-<td>14958.0</td>
+<td>38.0</td>
+<td>39.0</td>
+<td>3-4</td>
+<td>4-5</td>
 </tr>
 <tr>
 <th>4</th>
 <td>Acura</td>
 <td>ILX Hybrid 1.5L</td>
 <td>2013</td>
-<td>114865.0</td>
-<td>1.5L I4 8V MPFI SOHC Hybrid</td>
-<td>Automatic CVT</td>
+<td>62042.0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>Kalidy Kia</td>
+<td>2.2</td>
+<td>4.4</td>
+<td>...</td>
+<td>1.5</td>
+<td>4</td>
+<td>hybrid</td>
+<td>automatic</td>
 <td>Front-wheel Drive</td>
 <td>Hybrid</td>
-<td>39-38</td>
-<td>NaN</td>
-<td>Ebony</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>1.0</td>
-<td>Herb Connolly Chevrolet</td>
-<td>3.7</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>300.0</td>
-<td>14498.0</td>
+<td>38.0</td>
+<td>39.0</td>
+<td>2-3</td>
+<td>4-5</td>
 </tr>
 <tr>
 <th>...</th>
@@ -7748,131 +7755,170 @@ a.anchor-link {
 <td>...</td>
 <td>...</td>
 <td>...</td>
+<td>...</td>
 </tr>
 <tr>
-<th>762086</th>
+<th>591093</th>
+<td>Volvo</td>
+<td>S60 T5</td>
+<td>2020</td>
+<td>26781.0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Jenkins Volvo of Ocala</td>
+<td>5.0</td>
+<td>4.9</td>
+<td>...</td>
+<td>2.0</td>
+<td>4</td>
+<td>turbo</td>
+<td>automatic</td>
+<td>Front-wheel Drive</td>
+<td>Gasoline</td>
+<td>23.0</td>
+<td>34.0</td>
+<td>4-5</td>
+<td>4-5</td>
+</tr>
+<tr>
+<th>591094</th>
 <td>Volvo</td>
 <td>S60 B5 Momentum</td>
 <td>2022</td>
 <td>22877.0</td>
-<td>2.0L I4 16V GDI DOHC Turbo</td>
-<td>8-Speed Automatic</td>
-<td>All-wheel Drive</td>
-<td>Gasoline</td>
-<td>25-33</td>
-<td>Bright Silver Metallic</td>
-<td>Blond</td>
-<td>0.0</td>
-<td>1.0</td>
-<td>0.0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
 <td>Volvo Cars Danbury</td>
 <td>4.2</td>
 <td>4.2</td>
+<td>...</td>
 <td>2.0</td>
-<td>250.0</td>
-<td>34798.0</td>
-</tr>
-<tr>
-<th>762087</th>
-<td>Volvo</td>
-<td>S60 T5</td>
-<td>2012</td>
-<td>72900.0</td>
-<td>250.0HP 2.5L 5 Cylinder Engine Gasoline Fuel</td>
-<td>A/T</td>
-<td>Front-wheel Drive</td>
+<td>4</td>
+<td>turbo</td>
+<td>automatic</td>
+<td>All-wheel Drive</td>
 <td>Gasoline</td>
-<td>NaN</td>
-<td>Red</td>
-<td>Beige</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>4.5</td>
-<td>101.0</td>
-<td>NaN</td>
-<td>12500.0</td>
+<td>25.0</td>
+<td>33.0</td>
+<td>4-5</td>
+<td>4-5</td>
 </tr>
 <tr>
-<th>762088</th>
+<th>591095</th>
 <td>Volvo</td>
 <td>S60 T5</td>
 <td>2014</td>
 <td>92000.0</td>
-<td>2.5L I5 20V MPFI DOHC Turbo</td>
-<td>6-Speed Automatic</td>
-<td>Front-wheel Drive</td>
-<td>Gasoline</td>
-<td>21-30</td>
-<td>Ice White</td>
-<td>Soft Beige</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>1.0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
 <td>Dapper Car Sales</td>
 <td>NaN</td>
 <td>4.8</td>
-<td>36.0</td>
-<td>300.0</td>
-<td>12299.0</td>
+<td>...</td>
+<td>2.5</td>
+<td>5</td>
+<td>turbo</td>
+<td>automatic</td>
+<td>Front-wheel Drive</td>
+<td>Gasoline</td>
+<td>21.0</td>
+<td>30.0</td>
+<td>sin valoración</td>
+<td>4-5</td>
 </tr>
 <tr>
-<th>762089</th>
+<th>591096</th>
 <td>Volvo</td>
 <td>S60 T5 Platinum</td>
 <td>2013</td>
 <td>132000.0</td>
-<td>2.5L I5 20V MPFI DOHC Turbo</td>
-<td>6-Speed Automatic</td>
-<td>All-wheel Drive</td>
-<td>Gasoline</td>
-<td>20-29</td>
-<td>Ice White</td>
-<td>Off Black</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
 <td>Legend Auto Sales Inc.</td>
 <td>4.6</td>
 <td>4.7</td>
-<td>62.0</td>
-<td>1000.0</td>
-<td>8995.0</td>
+<td>...</td>
+<td>2.5</td>
+<td>5</td>
+<td>turbo</td>
+<td>automatic</td>
+<td>All-wheel Drive</td>
+<td>Gasoline</td>
+<td>20.0</td>
+<td>29.0</td>
+<td>4-5</td>
+<td>4-5</td>
 </tr>
 <tr>
-<th>762090</th>
+<th>591097</th>
 <td>Volvo</td>
 <td>S60 T5 Premier</td>
 <td>2015</td>
 <td>115592.0</td>
-<td>2.5L I5 20V MPFI DOHC Turbo</td>
-<td>6-Speed Automatic</td>
-<td>All-wheel Drive</td>
-<td>Gasoline</td>
-<td>20-29</td>
-<td>Savile Gray Metallic</td>
-<td>Off-Black</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>1.0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
 <td>Plymouth Auto Sales</td>
 <td>NaN</td>
 <td>4.7</td>
-<td>51.0</td>
-<td>501.0</td>
-<td>12999.0</td>
+<td>...</td>
+<td>2.5</td>
+<td>5</td>
+<td>turbo</td>
+<td>automatic</td>
+<td>All-wheel Drive</td>
+<td>Gasoline</td>
+<td>20.0</td>
+<td>29.0</td>
+<td>sin valoración</td>
+<td>4-5</td>
 </tr>
 </tbody>
 </table>
-<p>762091 rows × 20 columns</p>
+<p>591098 rows × 22 columns</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=372d18c1">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5b183ee2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="1.-Nuevas-variables-num%C3%A9ricas:"><u>1. Nuevas variables numéricas:</u><a class="anchor-link" href="#1.-Nuevas-variables-num%C3%A9ricas:">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=35b775e0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'car_age'"><u>'car_age'</u><a class="anchor-link" href="#'car_age'">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7bd6390e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Se-crea-car_age-porque-la-antig%C3%BCedad-del-coche-es-m%C3%A1s-interpretativa-que-el-a%C3%B1o-y-suele-correlacionar-con-el-precio.">Se crea car_age porque la antigüedad del coche es más interpretativa que el año y suele correlacionar con el precio.<a class="anchor-link" href="#Se-crea-car_age-porque-la-antig%C3%BCedad-del-coche-es-m%C3%A1s-interpretativa-que-el-a%C3%B1o-y-suele-correlacionar-con-el-precio.">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2abc64e1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7880,30 +7926,36 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_ini</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">data_year</span> <span class="o">=</span> <span class="mi">2024</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'car_age'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_year</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Index(['manufacturer', 'model', 'year', 'mileage', 'engine', 'transmission',
-       'drivetrain', 'fuel_type', 'mpg', 'exterior_color', 'interior_color',
-       'accidents_or_damage', 'one_owner', 'personal_use_only', 'seller_name',
-       'seller_rating', 'driver_rating', 'driver_reviews_num', 'price_drop',
-       'price'],
-      dtype='object')</pre>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=70d0d26e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'mileage_per_year'"><u>'mileage_per_year'</u><a class="anchor-link" href="#'mileage_per_year'">¶</a></h3>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a2493270">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d4e98933">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Se-crea-esta-variable-para-diferenciar-entre-coches-con-muchos-km-pero-muy-viejo-vs-un-coche-muy-usado.">Se crea esta variable para diferenciar entre coches con muchos km pero muy viejo vs un coche muy usado.<a class="anchor-link" href="#Se-crea-esta-variable-para-diferenciar-entre-coches-con-muchos-km-pero-muy-viejo-vs-un-coche-muy-usado.">¶</a></h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=68bfeab9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7911,14 +7963,47 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'seller_name'</span><span class="p">,</span> <span class="s1">'seller_rating'</span><span class="p">,</span> <span class="s1">'driver_rating'</span><span class="p">,</span> <span class="s1">'driver_reviews_num'</span><span class="p">,</span> <span class="s1">'price_drop'</span><span class="p">,</span> <span class="s1">'price'</span><span class="p">]</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df_ini</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'car_age_clip'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'car_age'</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'mileage_per_year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'mileage'</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">'car_age_clip'</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1eb30d40">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3edffd5a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Pr%C3%B3ximamente-se-decidir%C3%A1-si-usar-car_age-y-mileage_per_yer,-y-quiz%C3%A1-prescind%C3%ADr-de-mileage-o-mentenerlo-para-comparar.">Próximamente se decidirá si usar car_age y mileage_per_yer, y quizá prescindír de mileage o mentenerlo para comparar.<a class="anchor-link" href="#Pr%C3%B3ximamente-se-decidir%C3%A1-si-usar-car_age-y-mileage_per_yer,-y-quiz%C3%A1-prescind%C3%ADr-de-mileage-o-mentenerlo-para-comparar.">¶</a></h4>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cafac17a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'mpg_mean'"><u>'mpg_mean'</u><a class="anchor-link" href="#'mpg_mean'">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8cf5b88d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Se-resume-el-rango-de-consumo-en-una-%C3%BAnica-medida-central-y-eliminamos-ambas-columnas-de-m%C3%A1ximos-y-m%C3%ADnimos.">Se resume el rango de consumo en una única medida central y eliminamos ambas columnas de máximos y mínimos.<a class="anchor-link" href="#Se-resume-el-rango-de-consumo-en-una-%C3%BAnica-medida-central-y-eliminamos-ambas-columnas-de-m%C3%A1ximos-y-m%C3%ADnimos.">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5f646f97">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7926,155 +8011,181 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'mpg_mean'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'mpg_min'</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">'mpg_max'</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'mpg_min'</span><span class="p">,</span> <span class="s1">'mpg_max'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>seller_name</th>
-<th>seller_rating</th>
-<th>driver_rating</th>
-<th>driver_reviews_num</th>
-<th>price_drop</th>
-<th>price</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>Iconic Coach</td>
-<td>NaN</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>300.0</td>
-<td>13988.0</td>
-</tr>
-<tr>
-<th>1</th>
-<td>Kars Today</td>
-<td>NaN</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>NaN</td>
-<td>17995.0</td>
-</tr>
-<tr>
-<th>2</th>
-<td>Weiss Toyota of South County</td>
-<td>4.3</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>500.0</td>
-<td>17000.0</td>
-</tr>
-<tr>
-<th>3</th>
-<td>Apple Tree Acura</td>
-<td>NaN</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>675.0</td>
-<td>14958.0</td>
-</tr>
-<tr>
-<th>4</th>
-<td>Herb Connolly Chevrolet</td>
-<td>3.7</td>
-<td>4.4</td>
-<td>12.0</td>
-<td>300.0</td>
-<td>14498.0</td>
-</tr>
-<tr>
-<th>...</th>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr>
-<th>762086</th>
-<td>Volvo Cars Danbury</td>
-<td>4.2</td>
-<td>4.2</td>
-<td>2.0</td>
-<td>250.0</td>
-<td>34798.0</td>
-</tr>
-<tr>
-<th>762087</th>
-<td>NaN</td>
-<td>NaN</td>
-<td>4.5</td>
-<td>101.0</td>
-<td>NaN</td>
-<td>12500.0</td>
-</tr>
-<tr>
-<th>762088</th>
-<td>Dapper Car Sales</td>
-<td>NaN</td>
-<td>4.8</td>
-<td>36.0</td>
-<td>300.0</td>
-<td>12299.0</td>
-</tr>
-<tr>
-<th>762089</th>
-<td>Legend Auto Sales Inc.</td>
-<td>4.6</td>
-<td>4.7</td>
-<td>62.0</td>
-<td>1000.0</td>
-<td>8995.0</td>
-</tr>
-<tr>
-<th>762090</th>
-<td>Plymouth Auto Sales</td>
-<td>NaN</td>
-<td>4.7</td>
-<td>51.0</td>
-<td>501.0</td>
-<td>12999.0</td>
-</tr>
-</tbody>
-</table>
-<p>762091 rows × 6 columns</p>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c81fdba1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'engine_power_index'"><u>'engine_power_index'</u><a class="anchor-link" href="#'engine_power_index'">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8c2d682c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Hemos-decidido-combinar-tama%C3%B1o-y-cilindros-en-una-variable-m%C3%A1s-sencilla.-Aunque-no-sea-f%C3%ADsico-al-100%25,-pero-como-atributo-puede-tener-sentido-(motores-m%C3%A1s-grandes-y-con-m%C3%A1s-cilindros--%3E-mayor-potencia--%3E-precio)">Hemos decidido combinar tamaño y cilindros en una variable más sencilla. Aunque no sea físico al 100%, pero como atributo puede tener sentido (motores más grandes y con más cilindros -&gt; mayor potencia -&gt; precio)<a class="anchor-link" href="#Hemos-decidido-combinar-tama%C3%B1o-y-cilindros-en-una-variable-m%C3%A1s-sencilla.-Aunque-no-sea-f%C3%ADsico-al-100%25,-pero-como-atributo-puede-tener-sentido-(motores-m%C3%A1s-grandes-y-con-m%C3%A1s-cilindros--%3E-mayor-potencia--%3E-precio)">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=268e7846">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'engine_power_index'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'engine_liters'</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'engine_cylinders'</span><span class="p">]</span>
+</pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=94f67af6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4832c688">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="2.Transformaciones:"><u>2.Transformaciones:</u><a class="anchor-link" href="#2.Transformaciones:">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ccd6f05a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Las-variables-como-price,-mileage-y-driver_reviews_num-suelen-estar-muy-sesgadas-y-por-lo-tanto:">Las variables como price, mileage y driver_reviews_num suelen estar muy sesgadas y por lo tanto:<a class="anchor-link" href="#Las-variables-como-price,-mileage-y-driver_reviews_num-suelen-estar-muy-sesgadas-y-por-lo-tanto:">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5dc16c74">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'log_price'"><u>'log_price'</u><a class="anchor-link" href="#'log_price'">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=61ff7ea8">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_price'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'price'</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ede02491">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Luego-podremos-probar-dos-enfoques,-uno-con-target-=-price-y-otro-con-target-=-log_price.">Luego podremos probar dos enfoques, uno con target = price y otro con target = log_price.<a class="anchor-link" href="#Luego-podremos-probar-dos-enfoques,-uno-con-target-=-price-y-otro-con-target-=-log_price.">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=02837bfd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'log_mileage'"><u>'log_mileage'</u><a class="anchor-link" href="#'log_mileage'">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ab056a38">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_mileage'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'mileage'</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2eb31621">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'log_driver_reviews_num'"><u>'log_driver_reviews_num'</u><a class="anchor-link" href="#'log_driver_reviews_num'">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=65a10d42">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_driver_reviews_num'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'driver_reviews_num'</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cce61a6e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="3.-Tratamiento-de-categor%C3%ADas-grandes:"><u>3. Tratamiento de categorías grandes:</u><a class="anchor-link" href="#3.-Tratamiento-de-categor%C3%ADas-grandes:">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=95971d6d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Algunas-variables-como-model-y-seller_name-tienen-una-gran-cantidad-de-categor%C3%ADas.-Esto-explota-el-n%C3%BAmero-de-columnas.">Algunas variables como model y seller_name tienen una gran cantidad de categorías. Esto explota el número de columnas.<a class="anchor-link" href="#Algunas-variables-como-model-y-seller_name-tienen-una-gran-cantidad-de-categor%C3%ADas.-Esto-explota-el-n%C3%BAmero-de-columnas.">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9989d5c3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8084,160 +8195,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6f7035ef">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'seller_name'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array(['Iconic Coach', 'Kars Today', 'Weiss Toyota of South County', ...,
-       'Volvo Cars of Louisville', 'Smith Volvo Cars',
-       'Steingold Volvo Cars'], shape=(18255,), dtype=object)</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4e106410">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'seller_name'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(8593)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2caa39ec">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b0772ed4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="Pocos-missing,-podremos-rellenarlos.">Pocos missing, podremos rellenarlos.<a class="anchor-link" href="#Pocos-missing,-podremos-rellenarlos.">¶</a></h5>
+<h5 id="Seller_name-se-ha-decidido-eliminar-ya-que-es-una-variable-con-cardinalidad-extremadamente-alta-(14.190-valores-distintos).-Funciona-casi-como-un-identificador-arbitrario.">Seller_name se ha decidido eliminar ya que es una variable con cardinalidad extremadamente alta (14.190 valores distintos). Funciona casi como un identificador arbitrario.<a class="anchor-link" href="#Seller_name-se-ha-decidido-eliminar-ya-que-es-una-variable-con-cardinalidad-extremadamente-alta-(14.190-valores-distintos).-Funciona-casi-como-un-identificador-arbitrario.">¶</a></h5>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8de75655">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="'seller_rating'"><u>'seller_rating'</u><a class="anchor-link" href="#'seller_rating'">¶</a></h3>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=43d3ab71">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'seller_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([nan, 4.3, 3.7, 2.2, 4.6, 3.3, 3.5, 4.7, 4.5, 4.8, 1.8, 4.2, 3.6,
-       3.2, 2.8, 4.9, 2.6, 4.4, 1.6, 2.4, 5. , 3.9, 2.1, 4.1, 1.5, 3.4,
-       4. , 3.1, 2.5, 2.9, 3.8, 3. , 2. , 2.3, 1.7, 1.3, 1.4, 2.7, 1.9,
-       1. , 1.2, 1.1])</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a668a80e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'seller_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(213973)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4812a78b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="30%25-de-missings,-quiz%C3%A1s-eliminemos-esta-columna">30% de missings, quizás eliminemos esta columna<a class="anchor-link" href="#30%25-de-missings,-quiz%C3%A1s-eliminemos-esta-columna">¶</a></h5>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=df6bcba5">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="'driver_rating'"><u>'driver_rating'</u><a class="anchor-link" href="#'driver_rating'">¶</a></h3>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0a00dfba">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=86307418">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8245,27 +8214,98 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'driver_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'seller_name'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([4.4, 3.7, 5. , 3.8, 4.7, 4.8, 4.1, 4.9, nan, 4. , 4.6, 4.5, 4.3,
-       4.2, 1. , 3. , 3.9, 3.5, 3.3, 3.4, 3.2, 2.5, 2.8, 3.6, 3.1, 2.9,
-       2. , 1.5, 1.3, 2.3, 2.7, 2.6, 1.9, 2.1, 1.7, 2.2])</pre>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f080f9d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="'model'"><u>'model'</u><a class="anchor-link" href="#'model'">¶</a></h3>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2531a13f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=034b192c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="Para-model,-lo-dejaremos-tal-cual-en-el-modelo-pero-usando-OneHotEncoder-con-min_frequency-en-el-pipeline-de-scikit-learn-para-agrupar-modelos-muy-raro-autom%C3%A1ticamente.">Para model, lo dejaremos tal cual en el modelo pero usando OneHotEncoder con min_frequency en el pipeline de scikit-learn para agrupar modelos muy raro automáticamente.<a class="anchor-link" href="#Para-model,-lo-dejaremos-tal-cual-en-el-modelo-pero-usando-OneHotEncoder-con-min_frequency-en-el-pipeline-de-scikit-learn-para-agrupar-modelos-muy-raro-autom%C3%A1ticamente.">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9afa7d56">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="4.-Selecci%C3%B3n-de-variables:"><u>4. Selección de variables:</u><a class="anchor-link" href="#4.-Selecci%C3%B3n-de-variables:">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=49852c06">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Con todo lo anterior, podemos acabar definiendo las variables así:</p>
+<p><strong>Variables numéricas:</strong></p>
+<ul>
+<li><code>car_age</code></li>
+<li><code>mileage</code> o <code>log_mileage</code></li>
+<li><code>mileage_per_year</code></li>
+<li><code>engine_liters</code></li>
+<li><code>engine_cylinders</code></li>
+<li><code>engine_power_index</code></li>
+<li><code>mpg_mean</code></li>
+<li><code>driver_reviews_num</code> o <code>log_driver_reviews_num</code></li>
+<li><code>seller_rating</code> o <code>seller_rating_cat</code> (como categórica)</li>
+<li><code>driver_rating</code> o <code>driver_rating_cat</code> (como categórica)</li>
+</ul>
+<p><strong>Variables categóricas:</strong></p>
+<ul>
+<li><code>manufacturer</code></li>
+<li><code>model</code></li>
+<li><code>fuel_simple</code></li>
+<li><code>transmission_simple</code></li>
+<li><code>drivetrain_simple</code></li>
+<li><code>accidents_or_damage</code></li>
+<li><code>one_owner</code></li>
+<li><code>personal_use_only</code></li>
+</ul>
+<p>Además, se han eliminado algunas variables originales porque:</p>
+<ul>
+<li>Han sido sustituidas por versiones refinadas (<code>mpg_min</code> / <code>mpg_max</code> frente a <code>mpg_mean</code>).</li>
+<li>Son difíciles de generalizar y presentan una cardinalidad muy alta<br/>
+(como <code>seller_name</code> completa, por ejemplo).</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2be0fda7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="5.-GUARD%C3%81MOS-DATASET-LISTO-PARA-EL-MODELO:"><u>5. GUARDÁMOS DATASET LISTO PARA EL MODELO:</u><a class="anchor-link" href="#5.-GUARD%C3%81MOS-DATASET-LISTO-PARA-EL-MODELO:">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8310e7b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8273,327 +8313,9 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'driver_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'../data/processed/model_cars.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(31632)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=232a0f18">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="Solo-4%25-de-missing.">Solo 4% de missing.<a class="anchor-link" href="#Solo-4%25-de-missing.">¶</a></h5>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9de6c4ef">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="'driver_reviews_num'"><u>'driver_reviews_num'</u><a class="anchor-link" href="#'driver_reviews_num'">¶</a></h3>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b850d442">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'driver_reviews_num'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([1.200e+01, 7.000e+00, 1.000e+00, 2.000e+00, 3.000e+00, 1.700e+01,
-       0.000e+00, 5.000e+00, 4.000e+00, 1.400e+01, 8.000e+00, 3.200e+01,
-       2.600e+01, 4.400e+01, 2.000e+01, 2.300e+01, 4.700e+01, 3.800e+01,
-       4.200e+01, 3.300e+01, 2.700e+01, 9.000e+00, 1.800e+01, 6.000e+00,
-       1.000e+01, 1.100e+01, 1.500e+01, 2.900e+01, 6.000e+01, 9.400e+01,
-       1.110e+02, 8.100e+01, 6.500e+01, 4.000e+01, 7.100e+01, 9.200e+01,
-       6.400e+01, 3.100e+01, 6.900e+01, 9.700e+01, 2.200e+02, 4.300e+01,
-       6.100e+01, 8.400e+01, 1.020e+02, 3.600e+01, 7.900e+01, 2.100e+01,
-       1.600e+01, 8.500e+01, 5.100e+01, 5.500e+01, 3.400e+01, 4.500e+01,
-       4.100e+01, 4.600e+01, 8.300e+01, 5.600e+01, 1.250e+02, 5.400e+01,
-       4.900e+01, 1.900e+01, 5.300e+01, 5.200e+01, 1.330e+02, 6.300e+01,
-       1.140e+02, 1.130e+02, 6.200e+01, 5.700e+01, 6.800e+01, 7.500e+01,
-       7.200e+01, 1.300e+01, 2.800e+01, 2.400e+01, 2.500e+01, 3.500e+01,
-       2.200e+01, 9.500e+01, 8.200e+01, 9.000e+01, 5.800e+01, 5.000e+01,
-       5.900e+01, 9.800e+01, 3.000e+01, 6.700e+01, 3.700e+01, 1.810e+02,
-       7.800e+01, 7.400e+01, 1.200e+02, 8.600e+01, 3.900e+01, 1.000e+02,
-       7.000e+01, 1.680e+02, 1.600e+02, 1.180e+02, 2.290e+02, 1.070e+02,
-       7.700e+01, 8.900e+01, 8.800e+01, 1.100e+02, 1.460e+02, 9.600e+01,
-       1.370e+02, 4.800e+01, 1.310e+02, 6.600e+01, 2.130e+02, 1.240e+02,
-       1.830e+02, 1.900e+02, 1.570e+02, 1.280e+02, 8.000e+01, 7.300e+01,
-       1.080e+02, 2.010e+02, 1.320e+02, 9.900e+01, 1.120e+02, 1.150e+02,
-       7.600e+01, 1.340e+02, 1.090e+02, 1.170e+02, 1.580e+02, 1.750e+02,
-       1.710e+02, 2.640e+02, 1.390e+02, 1.940e+02, 1.720e+02, 1.500e+02,
-       1.840e+02, 8.700e+01, 1.610e+02, 1.230e+02, 1.010e+02, 1.210e+02,
-       1.350e+02, 9.100e+01, 2.680e+02, 2.050e+02, 1.160e+02, 1.030e+02,
-       1.050e+02, 1.520e+02, 1.290e+02, 2.060e+02, 1.850e+02, 1.190e+02,
-       2.510e+02, 1.060e+02, 2.670e+02, 3.530e+02, 3.160e+02, 1.780e+02,
-       2.540e+02, 1.260e+02, 1.730e+02, 2.120e+02, 2.840e+02, 9.300e+01,
-       1.920e+02, 1.590e+02, 2.480e+02, 1.620e+02, 4.190e+02, 2.850e+02,
-       7.080e+02, 1.990e+02, 2.400e+02, 2.320e+02, 2.800e+02, 2.970e+02,
-       2.420e+02, 2.600e+02, 2.190e+02, 3.450e+02, 2.810e+02, 2.260e+02,
-       1.410e+02, 2.650e+02, 4.150e+02, 2.160e+02, 1.270e+02, 1.040e+02,
-       3.640e+02, 1.400e+02, 3.760e+02, 2.270e+02, 1.740e+02, 2.910e+02,
-       1.910e+02, 2.150e+02, 1.540e+02, 1.300e+02, 1.430e+02, 2.340e+02,
-       1.510e+02, 1.480e+02, 2.230e+02, 2.020e+02, 1.930e+02, 3.960e+02,
-       3.180e+02, 3.950e+02, 2.040e+02, 4.300e+02, 2.990e+02, 8.240e+02,
-       2.220e+02, 3.590e+02, 5.730e+02, 3.930e+02, 2.440e+02, 2.630e+02,
-       2.460e+02, 2.660e+02, 2.100e+02, 3.660e+02, 1.630e+02, 1.450e+02,
-       3.100e+02, 1.960e+02, 1.470e+02, 2.930e+02, 2.380e+02, 1.550e+02,
-       2.390e+02, 2.360e+02, 2.960e+02, 2.550e+02, 1.530e+02, 4.750e+02,
-       4.630e+02, 2.350e+02, 7.650e+02, 5.860e+02, 2.950e+02, 2.500e+02,
-       2.760e+02, 2.300e+02, 1.380e+02, 1.880e+02, 1.560e+02, 1.690e+02,
-       1.660e+02, 1.360e+02, 1.220e+02, 2.110e+02, 2.870e+02, 2.000e+02,
-       2.250e+02, 3.890e+02, 6.530e+02, 3.110e+02, 1.970e+02, 1.870e+02,
-       3.070e+02, 2.490e+02, 1.670e+02, 5.470e+02, 2.530e+02, 3.360e+02,
-       7.450e+02, 2.090e+02, 3.400e+02, 2.770e+02, 3.090e+02, 1.770e+02,
-       1.025e+03, 5.410e+02, 8.050e+02, 2.740e+02, 3.870e+02, 4.400e+02,
-       3.290e+02, 3.610e+02, 2.560e+02, 5.050e+02, 6.400e+02, 3.300e+02,
-       3.000e+02, 3.390e+02, 4.440e+02, 2.170e+02, 3.650e+02, 6.280e+02,
-       2.070e+02, 2.080e+02, 2.280e+02, 1.800e+02, 3.350e+02, 3.980e+02,
-       4.340e+02, 2.210e+02, 3.170e+02, 2.710e+02, 3.220e+02, 3.540e+02,
-       1.640e+02, 4.280e+02, 2.920e+02, 4.100e+02, 2.140e+02, 1.790e+02,
-       3.580e+02, 3.970e+02, 1.420e+02, 2.580e+02, 4.910e+02, 1.650e+02,
-       3.270e+02, 2.730e+02, 3.370e+02, 4.120e+02, 4.600e+02, 2.900e+02,
-       5.980e+02, 2.310e+02, 2.620e+02, 3.080e+02, 2.180e+02, 3.740e+02,
-       2.370e+02, 2.330e+02, 3.190e+02, 2.590e+02, 4.170e+02, 5.500e+02,
-       2.790e+02, 4.780e+02, 5.000e+02, 3.020e+02, 1.980e+02, 1.440e+02,
-       1.760e+02, 2.240e+02, 5.080e+02, 3.210e+02, 3.470e+02, 4.460e+02,
-       3.680e+02, 3.690e+02, 7.830e+02, 3.130e+02, 4.690e+02, 3.010e+02,
-       4.200e+02, 1.860e+02, 3.490e+02, 4.500e+02, 5.910e+02, 7.710e+02,
-       1.490e+02, 3.830e+02, 3.340e+02, 1.700e+02, 3.140e+02, 2.410e+02,
-       3.910e+02, 2.890e+02, 1.890e+02])</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=06b7d9c3">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'driver_reviews_num'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(0)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63e27718">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="Ning%C3%BAn-missing.">Ningún missing.<a class="anchor-link" href="#Ning%C3%BAn-missing.">¶</a></h5>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82d54464">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="'price'"><u>'price'</u><a class="anchor-link" href="#'price'">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=db2f395a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="Columna-target/etiqueta">Columna target/etiqueta<a class="anchor-link" href="#Columna-target/etiqueta">¶</a></h5>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9badc6e8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([13988., 17995., 17000., ..., 36328.,  8237.,  4563.],
-      shape=(63464,))</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=db346f47">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(0)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=62fd4503">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="Ning%C3%BAn-missing.">Ningún missing.<a class="anchor-link" href="#Ning%C3%BAn-missing.">¶</a></h5>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=079205b4">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="'price_drop'"><u>'price_drop'</u><a class="anchor-link" href="#'price_drop'">¶</a></h3>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a4716987">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'price_drop'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([  300.,    nan,   500., ..., 10723.,  4785.,  6920.], shape=(6405,))</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=88cc12dd">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'price_drop'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>np.int64(351979)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=246c2920">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="46%25-de-missing,-quiz%C3%A1s-nos-carguemos-esta-columna.">46% de missing, quizás nos carguemos esta columna.<a class="anchor-link" href="#46%25-de-missing,-quiz%C3%A1s-nos-carguemos-esta-columna.">¶</a></h5>
 </div>
 </div>
 </div>
