@@ -106,67 +106,72 @@ La separación se ha realizado de forma aleatoria, fijando una semilla
 
 ## 5. Modelos y algoritmos candidatos
 
-Se ha utilizado como **modelo base** un `DummyRegressor` (predice la mediana del precio), que sirve como referencia mínima.
+Se ha establecido un flujo de trabajo riguroso probando modelos de complejidad incremental. Todos los modelos han compartido el mismo preprocesamiento (ColumnTransformer y Pipeline) para asegurar una comparación justa.
 
-Como **modelos candidatos** se han entrenado:
-
-1. **Regresión lineal** con todas las variables transformadas.
-2. **Random Forest Regressor**.
-3. **Gradient Boosting Regressor**.
-
-Todos los modelos comparten el mismo pipeline de preprocesado (`ColumnTransformer`), para asegurar que la comparación sea justa.
-
-Las métricas de evaluación utilizadas han sido:
-
-- MAE (Mean Absolute Error)
-- RMSE (Root Mean Squared Error)
-- R² (coeficiente de determinación)
+- **DummyRegressor**: Modelo base que predice la mediana. Sirve como línea base (baseline) para saber si nuestros modelos realmente aprenden algo.   - **Regresión Lineal**: Modelo lineal clásico. Se observó underfitting (incapacidad de capturar la complejidad del mercado).
+- **Random Forest Regressor**: Mostró un excelente rendimiento en entrenamiento (`$R^2 \approx 1.0$`), pero sufría de un sobreajuste (overfitting) severo, generalizando peor en validación y siendo computacionalmente muy costoso debido al tamaño del dataset.
+- **XGBoost Regressor (eXtreme Gradient Boosting)**: El candidato final seleccionado. Demostró ser más eficiente y robusto que el Random Forest, manejando mejor la varianza y ofreciendo el mejor equilibrio entre sesgo y varianza.
 
 ---
 
 ## 6. Selección de hiperparámetros
 
-Sobre el modelo candidato con mejor rendimiento en validación (p. ej., Random Forest) se ha aplicado `RandomizedSearchCV` con validación cruzada de 3 folds, buscando sobre los siguientes hiperparámetros:
+Dada la magnitud del dataset (más de 760.000 registros), una búsqueda exhaustiva (GridSearchCV) resultaba computacionalmente inviable. Se optó por RandomizedSearchCV sobre el modelo ganador (XGBoost), utilizando validación cruzada de 3 folds (CV=3).
 
-- `n_estimators`
-- `max_depth`
-- `min_samples_split`
-- `min_samples_leaf`
-- etc.
+Estrategia de optimización: Se buscó maximizar el rendimiento minimizando el RMSE (Root Mean Squared Error) sobre la variable objetivo logarítmica (`log_price`).
 
-El criterio de selección ha sido maximizar el score negativo de RMSE (`scoring = 'neg_root_mean_squared_error'`).
+Se ajustaron los siguientes hiperparámetros clave para controlar la complejidad y la velocidad de aprendizaje:
+
+- **n_estimators** (`100, 300, 500`): Número de árboles de decisión.
+
+- **learning_rate** (`0.01, 0.05, 0.1`): Tasa de aprendizaje (paso de actualización de los pesos).
+
+- **max_depth** (`3, 5, 7, 10`): Profundidad máxima para controlar el sobreajuste.
+
+- **subsample y colsample_bytree**: Fracciones de datos y columnas usadas por árbol para añadir aleatoriedad y robustez.
+
+La búsqueda aleatoria convergió en una configuración robusta (500 estimadores, profundidad 10 y learning rate 0.05) que redujo significativamente el error en el conjunto de validación.
 
 ---
 
 ## 7. Resultados y evaluación final
 
-Comparando los modelos en el conjunto de validación se observa que:
+Tras seleccionar el mejor modelo de XGBoost y re-entrenarlo con los mejores hiperparámetros, se procedió a la evaluación definitiva utilizando el conjunto de TEST (datos nunca vistos por el modelo). Las predicciones (realizadas en escala logarítmica) fueron transformadas nuevamente a escala real (euros/dólares) para su interpretación de negocio.
 
-- El modelo base (Dummy) obtiene un MAE y un RMSE elevados, lo que indica que no es útil más allá de servir como referencia.
-- La **regresión lineal** mejora significativamente las métricas respecto al Dummy, pero presenta ciertas limitaciones para capturar relaciones no lineales.
-- El modelo de **árboles (Random Forest / Gradient Boosting)** obtiene los mejores resultados en validación.
+Métricas finales en TEST:
 
-El modelo elegido final es: **\<nombre del modelo elegido\>** con los siguientes resultados aproximados en el conjunto de test:
+- **MAE** (Error Medio Absoluto): $2,529.73
 
-- MAE (test): **\<valor\>**
-- RMSE (test): **\<valor\>**
-- R² (test): **\<valor\>**
+Interpretación: De media, el modelo se equivoca en aproximadamente 2.500$ al tasar un coche. Dado que el rango de precios varía desde coches muy baratos a lujo, es una precisión muy competitiva.
 
-*(Rellenar con los resultados reales.)*
+- **RMSE** (Raíz del Error Cuadrático Medio): $4,345.06
+
+Interpretación: Esta métrica es más sensible a grandes errores. La diferencia con el MAE indica que existen algunos casos atípicos (coches de muy alta gama o con características inusuales) donde el error es mayor.
+
+- **R²** (Coeficiente de determinación): 0.9475
+
+Interpretación: El modelo es capaz de explicar el 94.7% de la variabilidad del precio de los coches en el mercado.
 
 ---
 
 ## 8. Conclusiones
 
-- Factores como la **antigüedad (`car_age`)**, el **kilometraje (`mileage`)** y ciertas características técnicas (`engine`, `drivetrain`, `fuel_type`) tienen un impacto claro en el precio.
-- Los modelos de tipo **ensemble de árboles** capturan mejor las interacciones entre variables y ofrecen una mejora significativa frente a la regresión lineal.
-- El modelo final puede utilizarse para estimar precios razonables de coches de segunda mano en el mercado de EEUU, con las limitaciones de generalización a otros mercados.
+El proyecto ha permitido construir un sistema de tasación automática robusto y escalable. Las principales conclusiones extraídas son:
+
+- **Superioridad del Boosting**: Algoritmos como XGBoost superan claramente a enfoques tradicionales (Regresión Lineal) y a bagging clásico (Random Forest) en este tipo de datos tabulares, reduciendo el error a la mitad respecto a los modelos base.
+
+- **Importancia de la Transformación Logarítmica**: La variable price presenta una distribución muy asimétrica. Trabajar con log_price ha sido fundamental para estabilizar el entrenamiento y mejorar la convergencia del modelo.
+
+- **Eficacia del Modelo**: Con un MAE de 2,500 €, el modelo es una herramienta útil para dar referencias de precio rápidas en el mercado de segunda mano, aunque debe supervisarse en vehículos de lujo o coleccionismo (donde se concentran los mayores errores).
+
 
 Como trabajo futuro podrían explorarse:
 
-- Otros modelos más avanzados (XGBoost, LightGBM).
-- Mayor trabajo de selección de variables y tratamiento de outliers.
-- Incorporar información económica externa (macro datos, etc.).
+- Implementar técnicas de NLP (Procesamiento de Lenguaje Natural) para extraer información de la descripción textual de los anuncios, que actualmente no se usa.
+
+- Desarrollar una interfaz web (Streamlit) para poner el modelo en producción.
+
+- Explorar el ensamblaje (Stacking) de XGBoost con otros modelos como LightGBM o CatBoost para arañar puntos extra de precisión.
 
 ---
 
