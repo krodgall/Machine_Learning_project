@@ -108,17 +108,21 @@ La separación se ha realizado de forma aleatoria, fijando una semilla
 
 ## 5. Modelos y algoritmos candidatos
 
-Se ha establecido un flujo de trabajo riguroso probando modelos de complejidad incremental. Todos los modelos han compartido el mismo preprocesamiento (ColumnTransformer y Pipeline) para asegurar una comparación justa.
+Se siguió un flujo de trabajo consistente manteniendo el mismo preprocesamiento mediante ColumnTransformer y Pipeline, garantizando una comparación justa entre alternativas.
 
-- **DummyRegressor**: Modelo base que predice la mediana. Sirve como línea base (baseline) para saber si nuestros modelos realmente aprenden algo.   - **Regresión Lineal**: Modelo lineal clásico. Se observó underfitting (incapacidad de capturar la complejidad del mercado).
-- **Random Forest Regressor**: Mostró un excelente rendimiento en entrenamiento (`$R^2 \approx 1.0$`), pero sufría de un sobreajuste (overfitting) severo, generalizando peor en validación y siendo computacionalmente muy costoso debido al tamaño del dataset.
-- **XGBoost Regressor (eXtreme Gradient Boosting)**: El candidato final seleccionado. Demostró ser más eficiente y robusto que el Random Forest, manejando mejor la varianza y ofreciendo el mejor equilibrio entre sesgo y varianza.
+- **Regresión lineal como modelo base**: se utilizó como referencia inicial por su simplicidad e interpretabilidad. El MAE obtenido mostró un comportamiento estable y consistente, sirviendo como punto de partida idóneo para validar el pipeline y medir mejoras posteriores.
+
+- **Selección de variables guiada por MAE**: partiendo del modelo base, se comparó el MAE entre distintos conjuntos de variables para identificar las features más informativas y quedarnos con la combinación con mejor rendimiento.
+
+- **Comparación del objetivo** price vs log_price: se repitió el mismo proceso entrenando y evaluando con price y con log_price, comparando el MAE en ambos casos para elegir la formulación del target más adecuada. 
+
+- **XGBoost Regressor como modelo final**: una vez definido un conjunto de variables sólido y comprobada la consistencia de la Regresión Lineal como baseline, se empleó XGBoost para capturar relaciones no lineales e interacciones. Con ello se obtuvo una mejora clara del rendimiento y se consolidó el modelo final.
 
 ---
 
 ## 6. Selección de hiperparámetros
 
-Dada la magnitud del dataset (más de 760.000 registros), una búsqueda exhaustiva (GridSearchCV) resultaba computacionalmente inviable. Se optó por RandomizedSearchCV sobre el modelo ganador (XGBoost), utilizando validación cruzada de 3 folds (CV=3).
+Dada la magnitud del dataset (más de 760.000 registros), se optó por RandomizedSearchCV sobre el modelo ganador (XGBoost), utilizando validación cruzada de 3 folds (CV=3).
 
 Estrategia de optimización: Se buscó maximizar el rendimiento minimizando el RMSE (Root Mean Squared Error) sobre la variable objetivo logarítmica (`log_price`).
 
